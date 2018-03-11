@@ -1,5 +1,17 @@
-const MAX_SCORE = 8;
 const SPEED_INCREASE_STEP = 50;
+// The total number score possible
+const MUSICAL_NOTE_SCORE = [
+    Note.C,
+    Note.D,
+    Note.E,
+    Note.F,
+    Note.G,
+    Note.A5,
+    Note.B5,
+    Note.C5
+];
+const MAX_SCORE = MUSICAL_NOTE_SCORE.length;
+
 
 class Player {
     color: number;
@@ -28,7 +40,7 @@ class Player {
             if (ballIndex === player.lightPosition) {
                 light.fade(Colors.White, 255);
                 playerInControl = player;
-                music.playSoundUntilDone(music.sounds(Sounds.BaDing));
+                music.playTone(MUSICAL_NOTE_SCORE[player.score], 100);
                 player.score++;
                 if (player.score >= MAX_SCORE) {
                     declareWinner(player);
