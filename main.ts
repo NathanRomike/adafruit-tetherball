@@ -44,9 +44,6 @@ class Player {
                 }
                 playerInControl = player;
                 music.playTone(MUSICAL_NOTE_SCORE[player.score], 100);
-                if (player.score >= MAX_SCORE) {
-                    declareWinner(player);
-                }
             } else {
                 // TODO: Some sort of punishment debounce?
             }
@@ -69,8 +66,11 @@ function reset() {
     for (let player of players) {
         player.score = 0;
     }
-
+    ballIndex = -1;
 }
+
+input.buttonA.onEvent(ButtonEvent.Click, reset);
+input.buttonB.onEvent(ButtonEvent.Click, reset);
 
 function swingBall() {
     // Clear it
@@ -79,6 +79,9 @@ function swingBall() {
     for (let player of players) {
         if (light.pixelColor(player.lightPosition) === Colors.Black) {
             light.setPixelColor(player.lightPosition, player.color);
+        }
+        if (player.score >= MAX_SCORE) {
+          declareWinner(player);
         }
     }
     // Determine if the ball is missed.
