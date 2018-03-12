@@ -60,6 +60,7 @@ let ballIndex: number = -1;
 let playerInControl: Player;
 
 function reset() {
+    light.setPixelColor(ballIndex, Colors.Black);
     const randomPlayerIndex = Math.floor(Math.random() * players.length);
     playerInControl = players[randomPlayerIndex];
 
