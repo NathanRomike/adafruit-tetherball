@@ -39,9 +39,11 @@ class Player {
         this.joystickPin.onEvent(ButtonEvent.Click, () => {
             if (ballIndex === player.lightPosition) {
                 light.fade(Colors.White, 255);
+                if (playerInControl === player) {
+                    player.score++;
+                }
                 playerInControl = player;
                 music.playTone(MUSICAL_NOTE_SCORE[player.score], 100);
-                player.score++;
                 if (player.score >= MAX_SCORE) {
                     declareWinner(player);
                 }
@@ -78,6 +80,12 @@ function swingBall() {
         if (light.pixelColor(player.lightPosition) === Colors.Black) {
             light.setPixelColor(player.lightPosition, player.color);
         }
+    }
+    // Determine if the ball is missed.
+    const otherPlayer = (playerInControl === players[0]) ? players[1] : players[0];
+    if (ballIndex === otherPlayer.lightPosition) {
+        playerInControl.score++;
+        otherPlayer.score--;
     }
     if (playerInControl.facesClockwise) {
         ballIndex--;
